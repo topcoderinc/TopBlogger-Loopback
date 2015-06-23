@@ -1,0 +1,15 @@
+{
+  "db":{
+    "name":"db",
+    "connector":"memory"
+  },
+  "topblogger-loopback":{
+    "name":"topblogger-loopback",
+    "connector":"mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "database": "topblogger-loopback",
+    "username": "",
+    "password": ""
+  }
+}
