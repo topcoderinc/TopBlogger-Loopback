@@ -58,8 +58,8 @@ build the relationships
 * Comment on blog -- DONE
 * Upvote blogs not owned by them (only once) -- DONE
 * Downvote blogs not owned by them (only once) -- DONE
-* Like a comment they did not create
-* Dislike a comment they did not create
+* Like a comment they did not create -- DONE
+* Dislike a comment they did not create -- DONE
 * Mark the blog as viewed where they are not the author
 * Mark as inappropriate blogs not owned by them
 
@@ -89,9 +89,9 @@ See [this repo](https://github.com/strongloop/loopback-example-access-control) f
 
 // only authenticated can create
 ? Select the model to apply the ACL entry to: Blog
-? Select the ACL scope:
-? Select the access type:
-? Select the role:
+? Select the ACL scope: All methods and properties
+? Select the access type: Write
+? Select the role: Any authenticated user
 ? Select the permission to apply: Explicitly grant access
 
 // admins can update anything
@@ -154,6 +154,13 @@ See [this repo](https://github.com/strongloop/loopback-example-access-control) f
 ? Select the ACL scope: All methods and properties
 ? Select the access type: Read
 ? Select the role: All users
+? Select the permission to apply: Explicitly grant access
+
+// only authenticated can create/edit
+? Select the model to apply the ACL entry to: Comment
+? Select the ACL scope: All methods and properties
+? Select the access type: All methods and properties
+? Select the role: Any authenticated user
 ? Select the permission to apply: Explicitly grant access
 
 ## Testing

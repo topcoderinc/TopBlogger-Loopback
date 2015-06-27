@@ -49,6 +49,11 @@
       "type":"string",
       "required":true
     },
+    "tags":{
+      "type":[
+        "string"
+      ]
+    },
     "upvotes":{
       "type":[
         "string"
@@ -72,11 +77,6 @@
     "comments":{
       "type":"hasMany",
       "model":"Comment",
-      "foreignKey":""
-    },
-    "tags":{
-      "type":"hasMany",
-      "model":"Tag",
       "foreignKey":""
     }
   },

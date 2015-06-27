@@ -31,19 +31,8 @@ describe('Authenticated User', function() {
      });
   });
 
-  it('reads a blog correctly by id', function(done) {
-    api.get('/blogs/test-blog1?access_token='+accessToken)
-    .expect(200)
-    .end(done);
-  });
-
   it('reads a blog comments correctly by id', function(done) {
     api.get('/blogs/test-blog1/comments')
-    .expect(200, done);
-  });
-
-  it('reads a blog tags correctly by id', function(done) {
-    api.get('/blogs/test-blog1/tags')
     .expect(200, done);
   });
 
@@ -55,6 +44,16 @@ describe('Authenticated User', function() {
       "authorId": username
     })
     .expect(200, done);
+  });
+
+  it('successfully deletes a blog where current user is the owner', function(done) {
+    api.delete('/blogs/test-blog-delete-me?access_token='+accessToken)
+    .expect(204, done);
+  });
+
+  it('returns a 401 when deleting a blog where current user is NOT the owner', function(done) {
+    api.delete('/blogs/test-blog3?access_token='+accessToken)
+    .expect(401, done);
   });
 
   it('successfully creates a comment for a blog', function(done) {
@@ -117,6 +116,36 @@ describe('Authenticated User', function() {
     .expect(function (res) {
       assert.equal(res.body.isPublished, true);
       assert.notEqual(res.body.publishedDate, null);
+    })
+    .end(done);
+  });
+
+  it('returns a 403 error when an owner attempts to like their own comment', function(done) {
+    api.post('/comments/test-comment1/like?access_token='+accessToken)
+    .expect(403, done)
+  });
+
+  it('successfully likes a comment not owned by the user', function(done) {
+    api.post('/comments/test-comment2/like?access_token='+accessToken)
+    .expect(200)
+    .expect(function (res) {
+      assert.equal(res.body.numOfLikes, 1);
+      assert.equal(res.body.likes.length, 1);
+    })
+    .end(done);
+  });
+
+  it('returns a 403 error when an owner attempts to dislike their own comment', function(done) {
+    api.post('/comments/test-comment1/dislike?access_token='+accessToken)
+    .expect(403, done)
+  });
+
+  it('successfully dislikes a comment not owned by the user', function(done) {
+    api.post('/comments/test-comment2/dislike?access_token='+accessToken)
+    .expect(200)
+    .expect(function (res) {
+      assert.equal(res.body.numOfDislikes, 1);
+      assert.equal(res.body.dislikes.length, 1);
     })
     .end(done);
   });

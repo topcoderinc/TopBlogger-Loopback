@@ -31,7 +31,7 @@ module.exports = function(Blog) {
     Blog.findById(id, function(err, record){
       // get the calling user from the context & push to array
       record.upvotes.push(ctx.active.accessToken.userId);
-      record.updateAttributes({numOfUpVotes: 1, upvotes: record.upvotes}, function(err, instance) {
+      record.updateAttributes({numOfUpVotes: record.upvotes.length, upvotes: record.upvotes}, function(err, instance) {
         if (err) cb(err);
         if (!err) cb(null, instance);
       })
@@ -55,6 +55,10 @@ module.exports = function(Blog) {
         var err = new Error("User cannot upvote their own blog post.");
         err.status = 403;
         next(err);
+      } else if (record.upvotes.indexOf(ctx.req.accessToken.userId) != -1) {
+        var err = new Error("User has already upvoted the blog.");
+        err.status = 403;
+        next(err);
       } else {
         next();
       }
@@ -69,7 +73,7 @@ module.exports = function(Blog) {
     Blog.findById(id, function(err, record){
       // get the calling user from the context & push to array
       record.downvotes.push(ctx.active.accessToken.userId);
-      record.updateAttributes({numOfDownVotes: 1, downvote: record.downvotes}, function(err, instance) {
+      record.updateAttributes({numOfDownVotes: record.downvotes.length, downvote: record.downvotes}, function(err, instance) {
         if (err) cb(err);
         if (!err) cb(null, instance);
       })
@@ -93,6 +97,10 @@ module.exports = function(Blog) {
         var err = new Error("User cannot downvote their own blog post.");
         err.status = 403;
         next(err);
+      } else if (record.downvotes.indexOf(ctx.req.accessToken.userId) != -1) {
+        var err = new Error("User has already downvoted the blog.");
+        err.status = 403;
+        next(err);
       } else {
         next();
       }
@@ -113,6 +121,7 @@ module.exports = function(Blog) {
       }
       if (ctx.instance.upvotes === undefined) ctx.instance.upvotes = [];
       if (ctx.instance.downvotes === undefined) ctx.instance.downvotes = [];
+      if (ctx.instance.tags === undefined) ctx.instance.tags = [];
     }
     next();
   });
