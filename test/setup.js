@@ -103,8 +103,8 @@ before(function(done) {
 })
 
 after(function(done) {
-  //  Blog.destroyAll();
-  //  User.destroyAll();
-  //  Comment.destroyAll();
+   Blog.destroyAll();
+   User.destroyAll();
+   Comment.destroyAll();
    done();
 })
