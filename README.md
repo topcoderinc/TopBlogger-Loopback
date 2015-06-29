@@ -189,3 +189,7 @@ See the [Loopback Testing repo](https://github.com/strongloop/loopback-testing)
 ## Using the REST api
 
 http://docs.strongloop.com/display/public/LB/PersistedModel+REST+API
+
+## Testing
+
+Start app with `NODE_ENV=test nodemon server/server.js`
