@@ -16,7 +16,7 @@ module.exports = function(Comment) {
     }
   );
 
-  // Model hook called before running function
+  // Remote hook called before running function
   Comment.beforeRemote('like', function(ctx, user, next) {
     Comment.findById(ctx.req.params.id, function(err, record){
       // do not let the user like their own record
@@ -61,7 +61,7 @@ module.exports = function(Comment) {
     }
   );
 
-  // Model hook called before running function
+  // Remote hook called before running function
   Comment.beforeRemote('dislike', function(ctx, user, next) {
     Comment.findById(ctx.req.params.id, function(err, record){
       // do not let the user dislike their own record
