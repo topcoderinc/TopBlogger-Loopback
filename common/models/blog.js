@@ -36,7 +36,7 @@ module.exports = function(Blog) {
     }
   );
 
-  // Model hook called before running function
+  // Remote hook called before running function
   Blog.beforeRemote('upvote', function(ctx, user, next) {
     Blog.findById(ctx.req.params.id, function(err, record){
       // do not let the user upvote their own record
@@ -82,7 +82,7 @@ module.exports = function(Blog) {
     }
   );
 
-  // Model hook called before running function
+  // Remote hook called before running function
   Blog.beforeRemote('downvote', function(ctx, user, next) {
     Blog.findById(ctx.req.params.id, function(err, record){
       // do not let the user downvote their own record
