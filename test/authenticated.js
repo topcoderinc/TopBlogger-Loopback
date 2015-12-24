@@ -48,7 +48,7 @@ describe('Authenticated User', function() {
 
   it('successfully deletes a blog where current user is the owner', function(done) {
     api.delete('/blogs/test-blog-delete-me?access_token='+accessToken)
-    .expect(204, done);
+    .expect(200, done);
   });
 
   it('returns a 401 when deleting a blog where current user is NOT the owner', function(done) {
